@@ -6,7 +6,7 @@ using namespace std;
 const int a = 5;
 const int b = 8;
 
-string encryptMessage(string Plaintext)
+string Encryption(string Plaintext)
 {
 	string Ciphertext = ""; 
     for(int i=0; i < Plaintext.length(); i++)
@@ -23,7 +23,7 @@ string encryptMessage(string Plaintext)
 	return Ciphertext;
 }
 
-string decryptCipher(string Ciphertext)
+string Decryption(string Ciphertext)
 {
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
@@ -54,12 +54,12 @@ int main()
 {
 	string Plaintext = "affine";
 	
-	//Calling encryption function
-	string Ciphertext = encryptMessage(Plaintext);
+	//Calling Encryption function
+	string Ciphertext = Encryption(Plaintext);
 	cout << "Encrypted Message is: " << Ciphertext <<endl;
 	
 	//Calling Decryption function
-	cout << "Decrypted Message is: " << decryptCipher(Ciphertext);
+	cout << "Decrypted Message is: " << Decryption(Ciphertext);
 
 	return 0;
 }
