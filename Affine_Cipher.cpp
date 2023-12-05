@@ -16,7 +16,7 @@ string Encryption(string Plaintext)
 	{ 
 		if(Plaintext[i]!=' ')
             //encryption formula (ax + b) mod m
-			Ciphertext = Ciphertext + (char) ((((a * (Plaintext[i]-'A') ) + b) % 26) + 'A');
+			Ciphertext = Ciphertext + (char) ((((a * (Plaintext[i]-'A')) + b) % 26) + 'A');
 		else
 			Ciphertext += Plaintext[i];	 
 	}
