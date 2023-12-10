@@ -19,7 +19,7 @@ string Decryption(string Ciphertext)
 		if ((a * i) % 26 == 1)
 			a_inv = i;
 	}
-
+    
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
 		if(Ciphertext[i]!=' ')
