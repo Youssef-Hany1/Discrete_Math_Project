@@ -6,23 +6,6 @@ using namespace std;
 const int a = 5;
 const int b = 8;
 
-string Encryption(string Plaintext)
-{
-	string Ciphertext = ""; 
-    for(int i=0; i < Plaintext.length(); i++)
-        Plaintext[i] = toupper (Plaintext[i]);
-
-	for (int i = 0; i < Plaintext.length(); i++)
-	{ 
-		if(Plaintext[i]!=' ')
-            //encryption formula (ax + b) mod m
-			Ciphertext = Ciphertext + (char) ((((a * (Plaintext[i]-'A')) + b) % 26) + 'A');
-		else
-			Ciphertext += Plaintext[i];	 
-	}
-	return Ciphertext;
-}
-
 string Decryption(string Ciphertext)
 {
 	string Plaintext = "";
@@ -41,7 +24,7 @@ string Decryption(string Ciphertext)
 	{
 		if(Ciphertext[i]!=' ')
 			//decryption formula a^-1*(x - b) mod m
-			Plaintext = Plaintext + (char) (((a_inv * ((Ciphertext[i]+'A' - b)) % 26)) + 'A');
+			Plaintext += (char) (((a_inv * ((Ciphertext[i]+'A' - b)) % 26)) + 'A');
 		else
 			Plaintext += Ciphertext[i]; 
 	}
@@ -52,11 +35,7 @@ string Decryption(string Ciphertext)
 //Driver Program
 int main()
 {
-	string Plaintext = "affine";
-	
-	//Calling Encryption function
-	string Ciphertext = Encryption(Plaintext);
-	cout << "Encrypted Message is: " << Ciphertext <<endl;
+	string Ciphertext = "OFHSBJFHM HXZPU";
 	
 	//Calling Decryption function
 	cout << "Decrypted Message is: " << Decryption(Ciphertext);
