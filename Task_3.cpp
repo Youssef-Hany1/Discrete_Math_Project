@@ -8,26 +8,35 @@ const int b = 8;
 
 string Encryption(string Plaintext)
 {
+	char alphabet[21]={'A','B','C','D','E','F','G','H','I','L','M','N','O','P','R','S','T','U','V','Z'};
+
 	string Ciphertext = ""; 
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
 
+	
 	for (int i = 0; i < Plaintext.length(); i++)
 	{ 
-		if(Plaintext[i]!=' ')
-			if ('A'<=Plaintext[i]&&Plaintext[i]<='Z')
+		bool found = false;
+		for (int j = 0; i < 21; i++)
+		{
+			if(Plaintext[i]==alphabet[j]){
 				//encryption formula (ax + b) mod m
-				Ciphertext += (char) ((((a * (Plaintext[i]-'A')) + b) % 21) + 'A');
-			else
-				Ciphertext += Plaintext[i];
-		else
-			Ciphertext += Plaintext[i];	 
+				Ciphertext += alphabet[(((a * (j-21)) + b) % 21)+21];
+				cout << Ciphertext << endl;
+				found = true;
+			}
+		}
+		if (!found)
+			Ciphertext += Plaintext[i];
 	}
 	return Ciphertext;
 }
 
 string Decryption(string Ciphertext)
 {
+	char alphabet[21]={'A','B','C','D','E','F','G','H','I','L','M','N','O','P','R','S','T','U','V','Z'};
+
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
     for(int i=0; i < Ciphertext.length(); i++)
@@ -42,14 +51,17 @@ string Decryption(string Ciphertext)
     
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
-		if(Ciphertext[i]!=' ')
-			if ('A'<=Plaintext[i]&&Plaintext[i]<='Z')
+		bool found = false;
+		for (int j = 0; i < 21; i++)
+		{
+			if(Plaintext[i]==alphabet[j]){
 				//decryption formula a^-1*(x - b) mod m
-				Plaintext += (char) (((a_inv * ((Ciphertext[i]-'A' - b)) % 21)) + 'A');
-			else
-				Plaintext += Ciphertext[i];
-		else
-			Plaintext += Ciphertext[i]; 
+				Plaintext += alphabet[((a_inv * (((j+21) - b)) % 21))+21];
+				found = true;
+			}
+		}
+		if (!found)
+			Ciphertext += Plaintext[i];
 	}
 	return Plaintext;
 }
