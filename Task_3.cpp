@@ -5,29 +5,37 @@ using namespace std;
 //Key values of a and b
 const int a = 5;
 const int b = 8;
+const string italianAlphabet = "ABCDEFGHILMNOPQRSTUVZ";
+
+int getIndex(char ch) {
+    int index = italianAlphabet.find(ch);
+    return (index >=0)? index : -1;
+}
+
+char getChar(int index) {
+    return italianAlphabet[index];
+}
 
 string Encryption(string Plaintext)
 {
-	char alphabet[21]={'A','B','C','D','E','F','G','H','I','L','M','N','O','P','R','S','T','U','V','Z'};
-
 	string Ciphertext = ""; 
+	
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
-
 	
 	for (int i = 0; i < Plaintext.length(); i++)
 	{ 
-		bool found = false;
-		for (int j = 0; i < 21; i++)
-		{
-			if(Plaintext[i]==alphabet[j]){
+		if(Plaintext[i]!=' '){
+			int x = getIndex(Plaintext[i]);
+			if(x!=-1){
 				//encryption formula (ax + b) mod m
-				Ciphertext += alphabet[(((a * (j-21)) + b) % 21)+21];
-				cout << Ciphertext << endl;
-				found = true;
+				int encrypted_char = (a * x + b) % italianAlphabet.size();
+				Ciphertext += getChar(encrypted_char);
 			}
+			else
+				Ciphertext += Plaintext[i];
 		}
-		if (!found)
+		else
 			Ciphertext += Plaintext[i];
 	}
 	return Ciphertext;
@@ -35,8 +43,6 @@ string Encryption(string Plaintext)
 
 string Decryption(string Ciphertext)
 {
-	char alphabet[21]={'A','B','C','D','E','F','G','H','I','L','M','N','O','P','R','S','T','U','V','Z'};
-
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
     for(int i=0; i < Ciphertext.length(); i++)
@@ -51,17 +57,18 @@ string Decryption(string Ciphertext)
     
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
-		bool found = false;
-		for (int j = 0; i < 21; i++)
-		{
-			if(Plaintext[i]==alphabet[j]){
-				//decryption formula a^-1*(x - b) mod m
-				Plaintext += alphabet[((a_inv * (((j+21) - b)) % 21))+21];
-				found = true;
+		if(Ciphertext[i]!=' '){
+			int x = getIndex(Ciphertext[i]);
+			if(x!=-1){
+				//encryption formula (ax + b) mod m
+				int decrypted_char = (a_inv * (x - b + italianAlphabet.size())) % italianAlphabet.size();
+				Plaintext += getChar(decrypted_char);
 			}
+			else
+				Plaintext += Ciphertext[i];
 		}
-		if (!found)
-			Ciphertext += Plaintext[i];
+		else
+			 Plaintext += Ciphertext[i];
 	}
 	return Plaintext;
 }
@@ -71,8 +78,10 @@ int main()
 {
 	string Plaintext = "AMO LA CRITTOGRAFIA";
 
-	cout << Plaintext << endl;
+	cout << "Plain Message is: " << Plaintext << endl;
 	
+	string Ciphertext = Encryption(Plaintext);
+
 	//Calling Encryption function
 	cout << "Encrypted Message is: " << Encryption(Plaintext) <<endl;
 
