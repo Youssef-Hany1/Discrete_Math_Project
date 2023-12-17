@@ -52,11 +52,13 @@ string Encryption(string Plaintext)
 string Advanced_Decryption(string Ciphertext)
 {
 	string Plaintext = "";
+	string Ciphertext1 = Ciphertext;
+	
 	int a_inv1 = 0; //a^-1
 	int a_inv2 = 0; //a^-1
     for(int i=0; i < Ciphertext.length(); i++)
         Ciphertext[i] = toupper (Ciphertext[i]);
-		
+
 	//Find a^-1
 	for (int i = 0; i < 26; i++)
 	{
@@ -80,6 +82,11 @@ string Advanced_Decryption(string Ciphertext)
 		else
 			Plaintext += Ciphertext[i]; 
 	}
+	
+	for(int i=0; i < Ciphertext.length(); i++){
+		if(Ciphertext1[i]!=Ciphertext[i])
+			Plaintext[i]=tolower(Plaintext[i]);
+	} 
 
 	return Plaintext;
 }
@@ -87,6 +94,8 @@ string Advanced_Decryption(string Ciphertext)
 string Advanced_Encryption(string Plaintext)
 {
 	string Ciphertext = ""; 
+	string Plaintext1 = Plaintext;
+
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
 
@@ -100,6 +109,12 @@ string Advanced_Encryption(string Plaintext)
 		else
 			Ciphertext += Plaintext[i];	 
 	}
+
+	for(int i=0; i < Plaintext.length(); i++){
+		if(Plaintext1[i]!=Plaintext[i])
+			Ciphertext[i]=tolower(Ciphertext[i]);
+	} 
+
 	return Ciphertext;
 }
 
