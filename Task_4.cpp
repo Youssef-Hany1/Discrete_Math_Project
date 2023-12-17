@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 //Key values of a and b
@@ -10,6 +11,7 @@ string Decryption(string Ciphertext)
 {
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
+
     for(int i=0; i < Ciphertext.length(); i++)
         Ciphertext[i] = toupper (Ciphertext[i]);
 
@@ -35,6 +37,7 @@ string Decryption(string Ciphertext)
 string Encryption(string Plaintext)
 {
 	string Ciphertext = ""; 
+
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
 
@@ -46,6 +49,7 @@ string Encryption(string Plaintext)
 		else
 			Ciphertext += Plaintext[i];	 
 	}
+	
 	return Ciphertext;
 }
 
@@ -54,18 +58,20 @@ string Advanced_Decryption(string Ciphertext)
 	string Plaintext = "";
 	string Ciphertext1 = Ciphertext;
 	
-	int a_inv1 = 0; //a^-1
-	int a_inv2 = 0; //a^-1
+	int a_inv1 = 0; //a^-1(1)
+	int a_inv2 = 0; //a^-1(2)
+
     for(int i=0; i < Ciphertext.length(); i++)
         Ciphertext[i] = toupper (Ciphertext[i]);
 
-	//Find a^-1
+	//Find a^-1(1)
 	for (int i = 0; i < 26; i++)
 	{
 		if ((a * i) % 26 == 1)
 			a_inv1 = i;
 	}
     
+	//Find a^-1(2)
 	for (int i = 0; i < 33; i++)
 	{
 		if ((a * i) % 33 == 1)
@@ -124,11 +130,13 @@ int main()
 	string Ciphertext1 = "OFHSBJFHM HXZPU";
 	string Ciphertext2 = "OFHSBJFHM HXZPU 1234?!+* asdf";
 
-	//Calling Decryption function
+	//Calling Decryption and Encryption function
+	cout << "Message is: " << setw(25) << Ciphertext1 << endl;
 	cout << "Decrypted Message is: " << Decryption(Ciphertext1) << endl;
-	cout << "Encrypted Message is: " << Encryption(Decryption(Ciphertext1)) << endl;
+	cout << "Encrypted Message is: " << Encryption(Decryption(Ciphertext1)) << endl << endl;
 
-	//Calling Advanced_Decryption function
+	//Calling Advanced_Decryption and Advanced_Encryption function
+	cout << "Message is: " << setw(48) << Ciphertext2 << endl;
 	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Ciphertext2) << endl;
 	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(Advanced_Decryption(Ciphertext2)) << endl;
 
