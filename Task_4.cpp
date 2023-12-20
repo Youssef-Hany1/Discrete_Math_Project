@@ -80,10 +80,10 @@ string Advanced_Decryption(string Ciphertext)
 	
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
-		if('A'<=Ciphertext[i]||Ciphertext[i]>='Z')
+		if('A'<=Ciphertext[i])
 			//decryption formula a^-1*(x - b) mod m
 			Plaintext += (char) (((a_inv1 * ((Ciphertext[i]+'A' - b)) % 26)) + 'A');
-		else if('!'<=Ciphertext[i]||Ciphertext[i]>='@')
+		else if('!'<=Ciphertext[i])
 			Plaintext += (char) (((a_inv2 * ((Ciphertext[i]+'!' - b)) % 33)) + '!');
 		else
 			Plaintext += Ciphertext[i]; 
@@ -107,10 +107,10 @@ string Advanced_Encryption(string Plaintext)
 
 	for (int i = 0; i < Plaintext.length(); i++)
 	{ 
-		if('A'<=Plaintext[i]||Plaintext[i]>='Z')
+		if('A'<=Plaintext[i])
             //encryption formula (ax + b) mod m
 			Ciphertext += (char) ((((a * (Plaintext[i]-'A')) + b) % 26) + 'A');
-		else if('!'<=Plaintext[i]||Plaintext[i]>='@')
+		else if('!'<=Plaintext[i])
 			Ciphertext += (char) ((((a * (Plaintext[i]-'!')) + b) % 33) + '!');
 		else
 			Ciphertext += Plaintext[i];	 
