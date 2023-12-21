@@ -128,7 +128,7 @@ string Advanced_Encryption(string Plaintext)
 int main()
 {
 	string Ciphertext1 = "OFHSBJFHM HXZPU";
-	string Ciphertext2 = "OFHSBJFHM HXZPU 1234?!+* asdf";
+	string Ciphertext2 = "OFHSBJFHM HXZPU 1256?!+* asdf";
 
 	//Calling Decryption and Encryption function
 	cout << "Message is: " << setw(25) << Ciphertext1 << endl;
