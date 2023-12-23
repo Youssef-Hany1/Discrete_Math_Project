@@ -6,7 +6,7 @@ using namespace std;
 //Key values of a and b
 const int a = 5;
 const int b = 8;
-const string italianAlphabet = "ABCDEFGHILMNOPQRSTUVZ";
+const string italianAlphabet = " ABCDEFGHILMNOPQRSTUVZ";
 
 int getIndex(char ch) {
     int index = italianAlphabet.find(ch);
@@ -26,15 +26,11 @@ string Encryption(string Plaintext)
 	
 	for (int i = 0; i < Plaintext.length(); i++)
 	{ 
-		if(Plaintext[i]!=' '){
-			int x = getIndex(Plaintext[i]);
-			if(x!=-1){
-				//encryption formula (ax + b) mod m
-				int encrypted_char = (a * x + b) % italianAlphabet.size();
-				Ciphertext += getChar(encrypted_char);
-			}
-			else
-				Ciphertext += Plaintext[i];
+		int x = getIndex(Plaintext[i]);
+		if(x!=-1){
+			//encryption formula (ax + b) mod m
+			int encrypted_char = (a * x + b) % italianAlphabet.size();
+			Ciphertext += getChar(encrypted_char);
 		}
 		else
 			Ciphertext += Plaintext[i];
@@ -50,26 +46,22 @@ string Decryption(string Ciphertext)
         Ciphertext[i] = toupper (Ciphertext[i]);
 
 	//Find a^-1
-	for (int i = 0; i < 21; i++)
+	for (int i = 0; i < 22; i++)
 	{
-		if ((a * i) % 21 == 1)
+		if ((a * i) % 22 == 1)
 			a_inv = i;
 	}
     
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
-		if(Ciphertext[i]!=' '){
-			int x = getIndex(Ciphertext[i]);
-			if(x!=-1){
-				//encryption formula (ax + b) mod m
-				int decrypted_char = (a_inv * (x - b + italianAlphabet.size())) % italianAlphabet.size();
-				Plaintext += getChar(decrypted_char);
-			}
-			else
-				Plaintext += Ciphertext[i];
+		int x = getIndex(Ciphertext[i]);
+		if(x!=-1){
+			//encryption formula (ax + b) mod m
+			int decrypted_char = (a_inv * (x - b + italianAlphabet.size())) % italianAlphabet.size();
+			Plaintext += getChar(decrypted_char);
 		}
 		else
-			 Plaintext += Ciphertext[i];
+		Plaintext += Ciphertext[i];
 	}
 	return Plaintext;
 }
@@ -77,14 +69,13 @@ string Decryption(string Ciphertext)
 string Advanced_Encryption(string Plaintext)
 {
 	string Ciphertext = ""; 
-	string Plaintext1 = Plaintext;
 
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
 
 	for (int i = 0; i < Plaintext.length(); i++)
 	{ 
-		if('A'<=Plaintext[i]){
+		if('A'<=Plaintext[i]||' '==Plaintext[i]){
 			int x = getIndex(Plaintext[i]);
 			if(x!=-1){
 				//encryption formula (ax + b) mod m
@@ -100,18 +91,12 @@ string Advanced_Encryption(string Plaintext)
 			Ciphertext += Plaintext[i];
 	}
 
-	for(int i=0; i < Plaintext.length(); i++){
-		if(Plaintext1[i]!=Plaintext[i])
-			Ciphertext[i]=tolower(Ciphertext[i]);
-	} 
-
 	return Ciphertext;
 }
 
 string Advanced_Decryption(string Ciphertext)
 {
 	string Plaintext = "";
-	string Ciphertext1 = Ciphertext;
 	
 	int a_inv1 = 0; //a^-1(1)
 	int a_inv2 = 0; //a^-1(2)
@@ -120,9 +105,9 @@ string Advanced_Decryption(string Ciphertext)
         Ciphertext[i] = toupper (Ciphertext[i]);
 
 	//Find a^-1(1)
-	for (int i = 0; i < 21; i++)
+	for (int i = 0; i < 22; i++)
 	{
-		if ((a * i) % 21 == 1)
+		if ((a * i) % 22 == 1)
 			a_inv1 = i;
 	}
     
@@ -135,7 +120,7 @@ string Advanced_Decryption(string Ciphertext)
 
 	for (int i = 0; i < Ciphertext.length(); i++)
 	{
-		if('A'<=Ciphertext[i]){
+		if('A'<=Ciphertext[i]||' '==Ciphertext[i]){
 			int x = getIndex(Ciphertext[i]);
 			if(x!=-1){
 				//encryption formula (ax + b) mod m
@@ -150,11 +135,6 @@ string Advanced_Decryption(string Ciphertext)
 		else
 			 Plaintext += Ciphertext[i];
 	}
-	
-	for(int i=0; i < Ciphertext.length(); i++){
-		if(Ciphertext1[i]!=Ciphertext[i])
-			Plaintext[i]=tolower(Plaintext[i]);
-	} 
 
 	return Plaintext;
 }
@@ -163,7 +143,7 @@ string Advanced_Decryption(string Ciphertext)
 int main()
 {
 	string Plaintext = "AMO LA CRITTOGRAFIA";
-	string Plaintext2 = "AMO LA CRITTOGRAFIA 1256?!+* asdf";
+	string Plaintext2 = "AMO LA CRITTOGRAFIA 1256?!+* asdfr";
 
 	//Calling Encryption and Decryption function
 	cout << "Plain Message is: " << setw(23) << Plaintext << endl;
@@ -171,7 +151,7 @@ int main()
 	cout << "Decrypted Message is: " << Decryption(Encryption(Plaintext)) << endl << endl;
 
 	//Calling Advanced_Encryption and Advanced_Decryption function
-	cout << "Plain Message is: " << setw(46) << Plaintext2 << endl;
+	cout << "Plain Message is: " << setw(47) << Plaintext2 << endl;
 	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(Plaintext2) << endl;
 	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Advanced_Encryption(Plaintext2)) << endl;
 	return 0;
