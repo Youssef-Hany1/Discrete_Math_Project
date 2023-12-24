@@ -6,23 +6,29 @@ using namespace std;
 //Key values of a and b
 const int a = 5;
 const int b = 8;
+
+// Italian alphabet strings
 const string italianAlphabet = " ABCDEFGHILMNOPQRSTUVZ";
 const string italianAlphabet2 = " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHILMNOPQRSTUVZabcdefghilmnopqrstuvz";
 
+//Function to get the index of a character in the first italian alphabet string
 int getIndex(char ch) {
     int index = italianAlphabet.find(ch);
     return (index >=0)? index : -1;
 }
 
+// Retrieve a character from the first Italian alphabet string by index
 char getChar(int index) {
     return italianAlphabet[index];
 }
 
+//Function to get the index of a character in the second italian alphabet string
 int getIndex2(char ch) {
     int index = italianAlphabet2.find(ch);
     return (index >=0)? index : -1;
 }
 
+// Retrieve a character from the second Italian alphabet string by index
 char getChar2(int index) {
     return italianAlphabet2[index];
 }
@@ -31,6 +37,7 @@ string Encryption(string Plaintext)
 {
 	string Ciphertext = ""; 
 	
+	// convert all to uppercase
     for(int i=0; i < Plaintext.length(); i++)
         Plaintext[i] = toupper (Plaintext[i]);
 	
@@ -52,6 +59,8 @@ string Decryption(string Ciphertext)
 {
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
+
+	// convert all to uppercase
     for(int i=0; i < Ciphertext.length(); i++)
         Ciphertext[i] = toupper (Ciphertext[i]);
 
