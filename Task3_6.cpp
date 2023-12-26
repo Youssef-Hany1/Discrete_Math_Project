@@ -3,10 +3,6 @@
 #include <iomanip>
 using namespace std;
 
-//Key values of a and b
-const int a = 5;
-const int b = 8;
-
 // Italian alphabet strings
 const string italianAlphabet = " ABCDEFGHILMNOPQRSTUVZ";
 const string italianAlphabet2 = " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHILMNOPQRSTUVZabcdefghilmnopqrstuvz";
@@ -33,7 +29,7 @@ char getChar2(int index) {
     return italianAlphabet2[index];
 }
 
-string Encryption(string Plaintext)
+string Encryption(string Plaintext, int a, int b)
 {
 	string Ciphertext = ""; 
 	
@@ -55,7 +51,7 @@ string Encryption(string Plaintext)
 	return Ciphertext;
 }
 
-string Decryption(string Ciphertext)
+string Decryption(string Ciphertext, int a, int b)
 {
 	string Plaintext = "";
 	int a_inv = 0; //a^-1
@@ -85,7 +81,7 @@ string Decryption(string Ciphertext)
 	return Plaintext;
 }
 
-string Advanced_Encryption(string Plaintext)
+string Advanced_Encryption(string Plaintext, int a, int b)
 {
 	string Ciphertext = "";
 
@@ -104,7 +100,7 @@ string Advanced_Encryption(string Plaintext)
 	return Ciphertext;
 }
 
-string Advanced_Decryption(string Ciphertext)
+string Advanced_Decryption(string Ciphertext, int a, int b)
 {
 	string Plaintext = "";
 	
@@ -138,14 +134,18 @@ int main()
 	string message1 = "AMO LA CRITTOGRAFIA";
 	string message2 = "AMI la crittografia?";
 
+	//Key values of a and b
+	int a=5;
+	int b=8;
+
 	//Calling Encryption and Decryption function
 	cout << "Plain Message is: " << setw(23) << message1 << endl;
-	cout << "Encrypted Message is: " << Encryption(message1) <<endl;
-	cout << "Decrypted Message is: " << Decryption(Encryption(message1)) << endl << endl;
+	cout << "Encrypted Message is: " << Encryption(message1,a,b) <<endl;
+	cout << "Decrypted Message is: " << Decryption(Encryption(message1,a,b),a,b) << endl << endl;
 
 	//Calling Advanced_Encryption and Advanced_Decryption function
 	cout << "Plain Message is: " << setw(33) << message2 << endl;
-	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(message2) << endl;
-	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Advanced_Encryption(message2)) << endl << endl;
+	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(message2,a,b) << endl;
+	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Advanced_Encryption(message2,a,b),a,b) << endl << endl;
 	return 0;
 }
