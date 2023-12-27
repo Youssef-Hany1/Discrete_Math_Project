@@ -19,8 +19,8 @@ these have to be equivilant and satisfiable showing the input values that makes 
 
 -The user is asked to enter 2 expressions and the variables may be "lower/uppercase"... both are handled to be "Generic"
 -Also the user can input "any number of variables not just 3", so as the function is "Generic"
--The user can also "use any letter".. it is not a must to start with a, b, c... they may be x, y and z and everything will still be output 
-and managed accordingly.. they dont have to be consecutive too... 
+-The user can also "use any letter".. it is not a must to start with a, b, c... they may be x, y and z and everything will still be output
+and managed accordingly.. they dont have to be consecutive too...
 TRYING MY BEST TO MAKE THE PROGRAM AS GENERIC AS POSSIBLE ...
 AND HERE COMES THE CODE...
 */
@@ -95,7 +95,7 @@ bool isSatisfiable(const std::string& expr, const std::unordered_map<char, bool>
 }
 
 // Function to generate the truth table and check equivalence of expressions
-void generateTruthTable(const std::string& expr1, const std::string& expr2) {
+void generateTruthTable(const std::string& expr1, const std::string& expr2, int recursionLimit = 10) {
     std::cout << "Truth Table:\n";
 
     // Create a map to store input variables
@@ -120,7 +120,7 @@ void generateTruthTable(const std::string& expr1, const std::string& expr2) {
     bool satisfiable1 = false;
     bool satisfiable2 = false;
 
-    
+
     // Generate truth table
     for (int i = 0; i < totalCombinations; ++i) {
         int mask = 1;
@@ -150,12 +150,10 @@ void generateTruthTable(const std::string& expr1, const std::string& expr2) {
             satisfiable2 = true;
         }
     }
+   
 
     // Display whether expressions are satisfiable or not
-    if (satisfiable1) {
-        std::cout << "Expr1 is satisfiable.\n";
-    }
-    else {
+    if (!satisfiable1 && !satisfiable2) { //modify both expressions
         std::cout << "Expr1 is unsatisfiable. Modifying...\n";
 
         // Modify the first expression to make it satisfiable
@@ -169,16 +167,121 @@ void generateTruthTable(const std::string& expr1, const std::string& expr2) {
         std::cout << "Truth Table for Modified Expression 1:\n";
         generateTruthTable(modifiedExpr1, expr2);
 
-        return;  // End the function to avoid duplicate messages
+
+        //------------modify second expression
+        std::cout << "Expr2 is unsatisfiable. Modifying...\n";
+
+        // Modify the second expression to make it satisfiable
+        std::string modifiedExpr2 = expr2;
+        replaceFirstGate(modifiedExpr2, '&', '|');  // Replace the first AND with OR
+
+        // Display modified expression
+        std::cout << "Modified Expression 2 to: " << modifiedExpr2 << "\n";
+
+        // Display new truth table for modified expression
+        std::cout << "Truth Table for Modified Expression 1:\n";
+        generateTruthTable(expr1, modifiedExpr2);
+
+
     }
 
-    if (satisfiable2) {
-        std::cout << "Expr2 is satisfiable.\n";
-    }
     else {
-        std::cout << "Expr2 is unsatisfiable.\n";
-    }
+        if(satisfiable1 && satisfiable2){
+            // Check if expressions are equivalent
+            bool equivalent = true;
+            for (int i = 0; i < totalCombinations; ++i) {
+                int mask = 1;
+                for (auto& input : inputVariables) {
+                    input.second = i & mask;
+                    mask <<= 1;
+                }
 
+                bool result1 = evaluateExpression(expr1, inputVariables);
+                bool result2 = evaluateExpression(expr2, inputVariables);
+
+                if (result1 != result2) {
+                    equivalent = false;
+                    break;
+                }
+            }
+
+            if (equivalent) {
+                std::cout << "The expressions are equivalent.\n";
+            }
+            else {
+                std::cout << "The expressions are not equivalent.\n";
+            }
+            std::cout << "\nValues of inputs making both expressions satisfiable:\n";
+            
+            bool satisfyingInputFound = false;
+            std::cout << "Both expressions are satisfiable.\n";
+            // Check the satisfying input values for both expressions
+
+            for (int i = 0; i < totalCombinations; ++i) {
+                int mask = 1;
+                for (auto& input : inputVariables) {
+                    input.second = i & mask;
+                    mask <<= 1;
+                }
+
+                bool result1 = evaluateExpression(expr1, inputVariables);
+                bool result2 = evaluateExpression(expr2, inputVariables);
+
+                if (result1 && result2) {
+                    satisfyingInputFound = true;
+                    std::cout << "Inputs: ";
+                    for (const auto& input : inputVariables) {
+                        std::cout << input.first << "=" << input.second << " ";
+                    }
+                    std::cout << "\n";
+                }
+            }
+            // Stop the function as both expressions are satisfiable
+            return;
+    }
+        if (satisfiable1) {
+            std::cout << "Expr1 is satisfiable.\n";
+            
+        }
+        else if(!satisfiable1) {
+            std::cout << "Expr1 is unsatisfiable. Modifying...\n";
+
+            // Modify the first expression to make it satisfiable
+            std::string modifiedExpr1 = expr1;
+            replaceFirstGate(modifiedExpr1, '&', '|');  // Replace the first AND with OR
+
+            // Display modified expression
+            std::cout << "Modified Expression 1 to: " << modifiedExpr1 << "\n";
+
+            // Display new truth table for modified expression
+            std::cout << "Truth Table for Modified Expression 1:\n";
+            generateTruthTable(modifiedExpr1, expr2);
+
+            return;  // End the function to avoid duplicate messages
+        }
+
+        if (satisfiable2) {
+            std::cout << "Expr2 is satisfiable.\n";
+            return;
+        }
+        else if (!satisfiable2) {
+            std::cout << "Expr2 is unsatisfiable. Modifying...\n";
+
+            // Modify the second expression to make it satisfiable
+            std::string modifiedExpr2 = expr2;
+            replaceFirstGate(modifiedExpr2, '&', '|');  // Replace the first AND with OR
+
+            // Display modified expression
+            std::cout << "Modified Expression 2 to: " << modifiedExpr2 << "\n";
+
+            // Display new truth table for modified expression
+            std::cout << "Truth Table for Modified Expression 1:\n";
+            generateTruthTable(expr1, modifiedExpr2);
+
+            return;  // End the function to avoid duplicate messages
+
+        }
+    }
     // Check if expressions are equivalent
     bool equivalent = true;
     for (int i = 0; i < totalCombinations; ++i) {
@@ -206,6 +309,8 @@ void generateTruthTable(const std::string& expr1, const std::string& expr2) {
     std::cout << "\nValues of inputs making both expressions satisfiable:\n";
     std::cout << "Inputs for both expressions:\n";
 
+    bool satisfyingInputFound = false;
+
     // Check the satisfying input values for both expressions
     for (int i = 0; i < totalCombinations; ++i) {
         int mask = 1;
@@ -218,12 +323,16 @@ void generateTruthTable(const std::string& expr1, const std::string& expr2) {
         bool result2 = evaluateExpression(expr2, inputVariables);
 
         if (result1 && result2) {
+            satisfyingInputFound = true;
             std::cout << "Inputs: ";
             for (const auto& input : inputVariables) {
                 std::cout << input.first << "=" << input.second << " ";
             }
             std::cout << "\n";
         }
+    }
+    if (!satisfyingInputFound) {
+        std::cout << "No input values found that satisfy both expressions.\n";
     }
 }
 
@@ -242,3 +351,8 @@ int main() {
 
     return 0;
 }
+//-------------------------------------this is the code on github we did
+
+
+
+
