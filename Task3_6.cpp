@@ -161,6 +161,8 @@ int main()
 	cin >> a1;
 	cout << "Enter the value of 'b': ";
 	cin >> b1;
+
+	cout << endl << "----------------Using Basic Functions----------------" << endl;
 	cout << "Decrypted Message is: "<< Encryption(sentence, a1, b1) << endl;
 	cout << "Encrypted Message is: " << Decryption(Encryption(sentence,a1,b1),a1,b1) << endl;
 
