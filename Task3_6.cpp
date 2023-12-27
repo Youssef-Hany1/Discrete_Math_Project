@@ -138,14 +138,31 @@ int main()
 	int a=5;
 	int b=8;
 
+	cout << "----------------Given Sentence----------------" << endl << endl;
+	cout << "----------------Using Basic Functions----------------" << endl;
 	//Calling Encryption and Decryption function
 	cout << "Plain Message is: " << setw(23) << message1 << endl;
 	cout << "Encrypted Message is: " << Encryption(message1,a,b) <<endl;
 	cout << "Decrypted Message is: " << Decryption(Encryption(message1,a,b),a,b) << endl << endl;
 
+	cout << "----------------Using Advanced Functions----------------" << endl;
 	//Calling Advanced_Encryption and Advanced_Decryption function
 	cout << "Plain Message is: " << setw(33) << message2 << endl;
 	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(message2,a,b) << endl;
 	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Advanced_Encryption(message2,a,b),a,b) << endl << endl;
+
+	string sentence;
+	int a1, b1;
+	
+	cout << "----------------User Input----------------" << endl << endl;
+	cout << "Enter the sentence to cipher: ";
+	getline(cin,sentence);
+	cout << "Enter the value of 'a': ";
+	cin >> a1;
+	cout << "Enter the value of 'b': ";
+	cin >> b1;
+	cout << "Decrypted Message is: "<< Encryption(sentence, a1, b1) << endl;
+	cout << "Encrypted Message is: " << Decryption(Encryption(sentence,a1,b1),a1,b1) << endl;
+
 	return 0;
 }

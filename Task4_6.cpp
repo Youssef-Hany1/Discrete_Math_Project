@@ -140,16 +140,32 @@ int main()
 	int a=5;
 	int b=8;
 
+	cout << "----------------Given Sentence----------------" << endl << endl;
+	cout << "----------------Using Basic Functions----------------" << endl;
 	//Calling Decryption and Encryption function
 	cout << "Message is: " << setw(26) << message1 << endl;
 	cout << "Decrypted Message is: " << Decryption(message1,a,b) << endl;
 	cout << "Encrypted Message is: " << Encryption(Decryption(message1,a,b),a,b) << endl << endl;
 
+	cout << "----------------Using Advanced Functions----------------" << endl;
 	//Calling Advanced_Decryption and Advanced_Encryption function
 	cout << "Message is: " << setw(39) << message2 << endl;
 	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(message2,a,b) << endl;
 	cout << "Advanced_Decrypted Message is: " << Advanced_Decryption(Advanced_Encryption(message2,a,b),a,b) << endl;
 	cout << "Advanced_Encrypted Message is: " << Advanced_Encryption(Advanced_Decryption(Advanced_Encryption(message2,a,b),a,b),a,b) << endl << endl;
+
+	string sentence;
+	int a1, b1;
+	
+	cout << "----------------User Input----------------" << endl << endl;
+	cout << "Enter the sentence to decipher: ";
+	getline(cin,sentence);
+	cout << "Enter the value of 'a': ";
+	cin >> a1;
+	cout << "Enter the value of 'b': ";
+	cin >> b1;
+	cout << "Decrypted Message is: "<< Decryption(sentence, a1, b1) << endl;
+	cout << "Encrypted Message is: " << Encryption(Decryption(sentence,a1,b1),a1,b1) << endl;
 
 	return 0;
 }
